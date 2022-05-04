@@ -33,10 +33,7 @@ jobs:
         run: |
           pip install -r extra_requirements/requirements-tests.txt
           python setup.py develop
-      # Run tests
       - name: Test package
-        # This is running a normal test
-        if: matrix.test == 'pytest'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
