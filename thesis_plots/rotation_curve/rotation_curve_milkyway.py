@@ -1,7 +1,7 @@
 """
-https://github.com/henrysky/milkyway_plot
-
-https://github.com/MariusCautun/Milky_Way_mass_profile
+Code to make a plot of the velocity distribution, we use two very nice repos to make our live easy:
+ - https://github.com/henrysky/milkyway_plot
+ - https://github.com/MariusCautun/Milky_Way_mass_profile
 """
 
 import os
@@ -11,6 +11,7 @@ import numpy as np
 from mw_plot import MWPlot
 from astropy import units as u
 from galpy.potential import plotRotcurve, vcirc
+
 import Cautun20_galpy_potential
 from Cautun20_galpy_potential import Cautun20
 Cautun_halo, Cautun_Discs, Cautun_Bulge, Cautun_cgm = Cautun20
@@ -29,8 +30,6 @@ def combined_milkiway_plot():
                  rot90=0,
                  grayscale=False,
                  annotation=True)
-
-    # setup subplots with matplotlib
 
     fig, (ax1, ax2) = plt.subplots(2, 1,
                                    figsize=(7.5, 7.5 * 1.25),
