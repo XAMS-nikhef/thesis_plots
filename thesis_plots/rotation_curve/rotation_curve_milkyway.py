@@ -25,7 +25,7 @@ Cautun_halo, Cautun_Discs, Cautun_Bulge, Cautun_cgm = Cautun20
 
 
 
-def combined_milkiway_combined():
+def combined_milkiway_plot():
     # setup a mw-plot instance of bird's eyes view of the disc
     solar_position = 8.122  # Solar position in kpc
 
