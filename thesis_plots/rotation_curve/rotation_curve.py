@@ -24,12 +24,15 @@ class RotationCurve:
         data = {}
         fns = ['fit', 'pts', 'pts+', 'pts-', 'halo', 'gas', 'stellar_disk', 'luminous+', 'luminous-']
         for fn in fns:
-            data[fn + '_x'], data[fn] = _read_curve(os.path.join(base, '..', 'data', 'rotation_curve', f'{fn}.txt'))
+            data[f'{fn}_x'], data[fn] = _read_curve(
+                os.path.join(base, '..', 'data', 'rotation_curve', f'{fn}.txt')
+            )
+
 
         data['dpts'] = (data['pts+'] - data['pts-']) * 0.5
 
         for fn in ['gas', 'stellar_disk', 'halo', 'fit', 'luminous+', 'luminous-']:
-            data[fn + '_x'] = np.concatenate([[0], data[fn + '_x']])
+            data[f'{fn}_x'] = np.concatenate([[0], data[f'{fn}_x']])
             data[fn] = np.concatenate([[0], data[fn]])
 
         xp = np.linspace(0, 16, 200)
@@ -41,7 +44,10 @@ class RotationCurve:
             np.interp(xp, data['halo_x'], data['halo'])**2)
 
         for pol in ('+', '-'):
-            data['lum%s' % pol] = np.interp(xp, data['luminous%s_x' % pol], data['luminous%s' % pol])
+            data[f'lum{pol}'] = np.interp(
+                xp, data[f'luminous{pol}_x'], data[f'luminous{pol}']
+            )
+
 
         self.data = data
 
