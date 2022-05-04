@@ -1,1 +1,4 @@
 matplotlib
+numpy
+mw_plot
+galpy

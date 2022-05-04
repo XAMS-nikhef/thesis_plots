@@ -1,6 +1,5 @@
 import setuptools
 
-
 def open_requirements(path):
     with open(path) as f:
         requires = [
