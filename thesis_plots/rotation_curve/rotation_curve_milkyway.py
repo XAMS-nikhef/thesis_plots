@@ -4,26 +4,18 @@ https://github.com/henrysky/milkyway_plot
 https://github.com/MariusCautun/Milky_Way_mass_profile
 """
 
-
-import sys
 import os
-
-base = os.path.dirname(os.path.realpath(__file__))
-abs_path = os.path.join(base, '..', '..', 'data', 'Milky_Way_mass_profile')
-
-if abs_path not in sys.path:
-    sys.path.append(abs_path)
-
 import matplotlib.pyplot as plt
 import numpy as np
 
 from mw_plot import MWPlot
 from astropy import units as u
 from galpy.potential import plotRotcurve, vcirc
-
+import Cautun20_galpy_potential
 from Cautun20_galpy_potential import Cautun20
 Cautun_halo, Cautun_Discs, Cautun_Bulge, Cautun_cgm = Cautun20
 
+abs_path = os.path.dirname(os.path.realpath(Cautun20_galpy_potential.__file__))
 
 
 def combined_milkiway_plot():

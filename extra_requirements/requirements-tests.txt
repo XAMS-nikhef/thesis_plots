@@ -7,3 +7,4 @@ pytest-cov==3.0.0
 galpy==1.7.2.
 mw_plot==0.9.0
 astropy==5.0.4
+git+https://github.com/JoranAngevaare/Milky_Way_mass_profile
