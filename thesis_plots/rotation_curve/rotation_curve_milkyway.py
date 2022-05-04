@@ -50,7 +50,7 @@ def combined_milkiway_plot():
     plt.sca(ax1)
 
     # read the Eilers et al (2019) rotation curve data
-    MW_Vrot_data = np.loadtxt(os.path.join(abs_path, 'MW_rotation_Eilers_2019.txt'))
+    MW_Vrot_data = np.loadtxt(os.path.join(abs_path, 'Milky_Way_mass_profile', 'MW_rotation_Eilers_2019.txt'))
     vdata_r = MW_Vrot_data[:, 0]
     vdata_vc = MW_Vrot_data[:, 1]
     vdata_vc_u = MW_Vrot_data[:, 2]
