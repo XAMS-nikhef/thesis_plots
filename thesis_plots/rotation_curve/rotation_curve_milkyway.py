@@ -4,13 +4,14 @@ https://github.com/henrysky/milkyway_plot
 https://github.com/MariusCautun/Milky_Way_mass_profile
 """
 
+
 import sys
 import os
 
 base = os.path.dirname(os.path.realpath(__file__))
 abs_path = os.path.join(base, '..', '..', 'data', 'Milky_Way_mass_profile')
 
-if not abs_path in sys.path:
+if abs_path not in sys.path:
     sys.path.append(abs_path)
 
 import matplotlib.pyplot as plt
