@@ -2,4 +2,4 @@
 
 def test_thesis_plots():
     import thesis_plots
-    thesis_plots.plot_dummy()
+    thesis_plots.dummy_plot()
