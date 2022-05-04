@@ -18,6 +18,14 @@ Cautun_halo, Cautun_Discs, Cautun_Bulge, Cautun_cgm = Cautun20
 
 abs_path = os.path.dirname(os.path.realpath(Cautun20_galpy_potential.__file__))
 
+base = os.listdir(abs_path)
+import glob
+in_base = glob.glob(os.path.join(abs_path, '*'))
+in_in_base = glob.glob(os.path.join(abs_path, '*', '*'))
+print(f'base {base}')
+print(f'in_base {in_base}')
+print(f'in_in_base {in_in_base}')
+assert False, (base, in_base)
 
 def combined_milkiway_plot():
     # setup a mw-plot instance of bird's eyes view of the disc
