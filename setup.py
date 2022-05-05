@@ -6,7 +6,10 @@ def open_requirements(path):
         requires = [
             r.split('/')[-1] if r.startswith('git+') else r
             for r in f.read().splitlines()]
-    return requires
+    return [
+        {'Milky_Way_mass_profile': 'mw_mass_profile'}.get(r, r)
+        for r in requires
+    ]
 
 
 with open('README.md') as file:
@@ -14,7 +17,6 @@ with open('README.md') as file:
 
 with open('HISTORY.md') as file:
     history = file.read()
-
 
 requires = open_requirements('requirements.txt')
 tests_requires = open_requirements('extra_requirements/requirements-tests.txt')

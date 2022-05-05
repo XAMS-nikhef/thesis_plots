@@ -17,8 +17,8 @@ jobs:
     strategy:
       fail-fast: False
       matrix:
-        python-version: ["3.10"]
-        test: [ 'coveralls']
+        python-version: [ "3.10" ]
+        test: [ 'coveralls' ]
     env:
       NUMBA_DISABLE_JIT: 1
     steps:
