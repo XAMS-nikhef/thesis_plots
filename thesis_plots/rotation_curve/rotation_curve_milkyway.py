@@ -8,11 +8,12 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 def combined_milkiway_plot():
     # nested imports to decrease import time
     from mw_plot import MWPlot
     from astropy import units as u
-    from galpy.potential import plotRotcurve, vcirc
+    from galpy.potential import vcirc
 
     from mw_mass_profile import Cautun20_galpy_potential
     from mw_mass_profile.Cautun20_galpy_potential import Cautun20
