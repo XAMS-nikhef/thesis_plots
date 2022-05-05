@@ -16,7 +16,6 @@ with open('HISTORY.md') as file:
 
 
 requires = open_requirements('requirements.txt')
-tests_requires = open_requirements('extra_requirements/requirements-tests.txt')
 
 setuptools.setup(name='thesis_plots',
                  version='0.1.0',
@@ -27,7 +26,6 @@ setuptools.setup(name='thesis_plots',
                  long_description_content_type="text/markdown",
                  setup_requires=['pytest-runner'],
                  install_requires=requires,
-                 tests_require=requires + tests_requires,
                  python_requires=">=3.10",
                  packages=setuptools.find_packages() + ['data', 'extra_requirements'],
                  package_dir={'thesis_plots': 'thesis_plots',
