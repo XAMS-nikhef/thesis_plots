@@ -8,18 +8,17 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
-from mw_plot import MWPlot
-from astropy import units as u
-from galpy.potential import plotRotcurve, vcirc
-
-import Cautun20_galpy_potential
-from Cautun20_galpy_potential import Cautun20
-Cautun_halo, Cautun_Discs, Cautun_Bulge, Cautun_cgm = Cautun20
-
-abs_path = os.path.dirname(os.path.realpath(Cautun20_galpy_potential.__file__))
-
-
 def combined_milkiway_plot():
+    # nested imports to decrease import time
+    from mw_plot import MWPlot
+    from astropy import units as u
+    from galpy.potential import plotRotcurve, vcirc
+
+    from mw_mass_profile import Cautun20_galpy_potential
+    from mw_mass_profile.Cautun20_galpy_potential import Cautun20
+    Cautun_halo, Cautun_Discs, Cautun_Bulge, Cautun_cgm = Cautun20
+
+    abs_path = os.path.dirname(os.path.realpath(Cautun20_galpy_potential.__file__))
     # setup a mw-plot instance of bird's eyes view of the disc
     solar_position = 8.122  # Solar position in kpc
 
@@ -50,7 +49,7 @@ def combined_milkiway_plot():
     plt.sca(ax1)
 
     # read the Eilers et al (2019) rotation curve data
-    MW_Vrot_data = np.loadtxt(os.path.join(abs_path, 'MW_rotation_Eilers_2019.txt'))
+    MW_Vrot_data = np.loadtxt(os.path.join(abs_path, '..', 'data', 'MW_rotation_Eilers_2019.txt'))
     vdata_r = MW_Vrot_data[:, 0]
     vdata_vc = MW_Vrot_data[:, 1]
     vdata_vc_u = MW_Vrot_data[:, 2]
