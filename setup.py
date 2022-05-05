@@ -6,9 +6,10 @@ def open_requirements(path):
         requires = [
             r.split('/')[-1] if r.startswith('git+') else r
             for r in f.read().splitlines()]
-    filtered_requires = [{'Milky_Way_mass_profile': 'mw_mass_profile'}.get(r, r)
-                         for r in requires]
-    return filtered_requires
+    return [
+        {'Milky_Way_mass_profile': 'mw_mass_profile'}.get(r, r)
+        for r in requires
+    ]
 
 
 with open('README.md') as file:
