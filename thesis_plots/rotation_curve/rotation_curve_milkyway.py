@@ -71,7 +71,7 @@ def combined_milkiway_plot():
                  capsize=3,
                  )
     # TODO, why /solar_position??
-    plt.plot(rvals * u.kpc, total := vcirc(Cautun20, rvals / solar_position, 0), label='Total')
+    plt.plot(rvals * u.kpc, vcirc(Cautun20, rvals / solar_position, 0), label='Total')
     plt.plot(rvals * u.kpc, vcirc(Cautun_halo, rvals / solar_position, 0), label='DM Halo')
     plt.plot(rvals * u.kpc, vcirc(Cautun_Discs, rvals / solar_position, 0), label='Discs')
     plt.plot(rvals * u.kpc, vcirc(Cautun_Bulge, rvals / solar_position, 0), label='Bulge')
@@ -85,4 +85,4 @@ def combined_milkiway_plot():
     # ax1.set_yticks(ax1.get_yticks()[1:])
     # plt.yticks(plt.yticks()[0][1:])
     plt.ylim(bottom=50, top=250)
-    [i.set_linewidth(mw1.fontsize / 10) for i in ax1.spines.values()]
+    _ = [i.set_linewidth(mw1.fontsize / 10) for i in ax1.spines.values()]
