@@ -1,6 +1,6 @@
 astropy==4.3.1; python_version<='3.7'
 astropy==5.1; python_version>'3.7'
-coverage==6.3.2
+coverage==6.4.4
 coveralls==3.3.1
 galpy==1.8.0
 matplotlib==3.5.3; python_version<='3.7'
