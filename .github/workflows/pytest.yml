@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: False
       matrix:
-        python-version: [ "3.10" ]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
         test: [ 'coveralls' ]
     env:
       NUMBA_DISABLE_JIT: 1
@@ -37,7 +37,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          coverage run --source=thesis_plots -m pytest -v --log-level=DEBUG --durations 0
+          pytest --cov thesis_plots -v --nbmake notebooks/*.ipynb --durations 0 --nb-coverage
+          coverage run --append --source=thesis_plots -m pytest -v --log-level=DEBUG --durations 0
           coveralls --service=github
       # Done
       - name: goodbye

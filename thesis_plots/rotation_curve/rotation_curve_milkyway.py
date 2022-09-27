@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def combined_milkiway_plot(r_max = 27.5, h_frac = 0.33):
+def combined_milkiway_plot(r_max=27.5, h_frac=0.33):
     # nested imports to decrease import time
     from mw_plot import MWPlot
     from astropy import units as u
@@ -48,7 +48,7 @@ def combined_milkiway_plot(r_max = 27.5, h_frac = 0.33):
     ax2.scatter(solar_position, 0, c='r', s=100)
     plt.sca(ax2)
     plt.xlim(-r_max, r_max)
-    
+
     plt.yticks(plt.yticks()[0][:-1])
     plt.sca(ax1)
 
@@ -87,11 +87,11 @@ def combined_milkiway_plot(r_max = 27.5, h_frac = 0.33):
     # ax1.set_yticks(ax1.get_yticks()[1:])
     # plt.yticks(plt.yticks()[0][1:])
     plt.ylim(bottom=0, top=250)
-#     y_labels = plt.yticks()[1]
-#     print(y_labels)
-#     y_labels[0] = ''
-#     print(y_labels)
-#     plt.yticks(plt.yticks()[0], y_labels)
+    #     y_labels = plt.yticks()[1]
+    #     print(y_labels)
+    #     y_labels[0] = ''
+    #     print(y_labels)
+    #     plt.yticks(plt.yticks()[0], y_labels)
     _ = [i.set_linewidth(mw1.fontsize / 10) for i in ax1.spines.values()]
-    
+
     ax2.set_ylim(-r_max, r_max)
