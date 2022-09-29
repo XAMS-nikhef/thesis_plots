@@ -11,7 +11,7 @@ nbmake==1.2.1
 numpy==1.21.6; python_version<='3.7'
 numpy==1.23.3; python_version>'3.7'
 pytest==7.1.3
-pytest-cov==3.0.0
+pytest-cov==4.0.0
 pytest-notebook==0.8.0
 
 git+https://github.com/JoranAngevaare/Milky_Way_mass_profile
