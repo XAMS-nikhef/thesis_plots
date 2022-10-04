@@ -3,4 +3,7 @@ numpy
 mw_plot
 galpy
 astropy
+wimprates
 git+https://github.com/JoranAngevaare/Milky_Way_mass_profile
+latex
+gitpython

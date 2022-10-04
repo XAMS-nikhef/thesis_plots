@@ -5,8 +5,11 @@ Code to make a plot of the velocity distribution, we use two very nice repos to 
 """
 
 import os
+
 import matplotlib.pyplot as plt
 import numpy as np
+
+from thesis_plots import string_to_mathrm as mathrm
 
 
 def combined_milkiway_plot(r_max=27.5, h_frac=0.33):
@@ -66,32 +69,28 @@ def combined_milkiway_plot(r_max=27.5, h_frac=0.33):
                  vdata_vc,
                  yerr=[vdata_vc_l, vdata_vc_u],
                  c='k',
-                 label='Eilers 19',
+                 label=mathrm('Eilers 19'),
                  ls='',
                  zorder=-1,
                  marker='.',
                  capsize=3,
                  )
     # TODO, why /solar_position??
-    plt.plot(rvals * u.kpc, vcirc(Cautun20, rvals / solar_position, 0), label='Total')
-    plt.plot(rvals * u.kpc, vcirc(Cautun_halo, rvals / solar_position, 0), label='DM Halo')
-    plt.plot(rvals * u.kpc, vcirc(Cautun_Discs, rvals / solar_position, 0), label='Discs')
-    plt.plot(rvals * u.kpc, vcirc(Cautun_Bulge, rvals / solar_position, 0), label='Bulge')
-    plt.plot(rvals * u.kpc, vcirc(Cautun_cgm, rvals / solar_position, 0), label='CGM')
-    plt.axvline(solar_position, ls='--', c='r', label='Sun')
+    plt.plot(rvals * u.kpc, vcirc(Cautun20, rvals / solar_position, 0), label=mathrm('Total'))
+    plt.plot(rvals * u.kpc, vcirc(Cautun_halo, rvals / solar_position, 0), label=mathrm('DM Halo'))
+    plt.plot(rvals * u.kpc, vcirc(Cautun_Discs, rvals / solar_position, 0), label=mathrm('Discs'))
+    plt.plot(rvals * u.kpc, vcirc(Cautun_Bulge, rvals / solar_position, 0), label=mathrm('Bulge'))
+    plt.plot(rvals * u.kpc, vcirc(Cautun_cgm, rvals / solar_position, 0), label=mathrm('CGM'))
+    plt.axvline(solar_position, ls='--', c='r', label=mathrm('Sun'))
     ax1.set_ylabel('$V_c$ $[\mathrm{km/s}]$', fontsize=mw1.fontsize)
     plt.axvline(0, ls='-', c='k')
 
     plt.legend(ncol=2, fontsize=13)
     ax1.tick_params(labelsize=mw1.fontsize * 0.8, width=mw1.fontsize / 10, length=mw1.fontsize / 2)
-    # ax1.set_yticks(ax1.get_yticks()[1:])
-    # plt.yticks(plt.yticks()[0][1:])
     plt.ylim(bottom=0, top=250)
-    #     y_labels = plt.yticks()[1]
-    #     print(y_labels)
-    #     y_labels[0] = ''
-    #     print(y_labels)
-    #     plt.yticks(plt.yticks()[0], y_labels)
     _ = [i.set_linewidth(mw1.fontsize / 10) for i in ax1.spines.values()]
 
     ax2.set_ylim(-r_max, r_max)
+    plt.sca(ax2)
+    for xy_label in [plt.ylabel, plt.xlabel]:
+        xy_label('$\mathrm{Galactrocentric\ coordinates\ [kpc]}$')

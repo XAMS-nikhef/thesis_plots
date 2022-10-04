@@ -6,9 +6,11 @@ Erik Hogenbirk. (2018). ErikHogenbirk/DMPlots: More code and update (v1.1.0). Ze
 t the rotation curve of M33, as measured in https://academic.oup.com/mnras/article/311/2/441/965167.
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
 import os
+
+import matplotlib.pyplot as plt
+import numpy as np
+
 import thesis_plots
 
 

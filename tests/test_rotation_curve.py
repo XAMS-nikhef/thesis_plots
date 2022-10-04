@@ -1,5 +1,6 @@
-import thesis_plots
 import matplotlib.pyplot as plt
+
+import thesis_plots
 
 
 def test_rotation_curve():

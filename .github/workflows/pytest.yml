@@ -31,15 +31,22 @@ jobs:
         uses: actions/checkout@v3
       - name: Install requirements
         run: |
+          sudo apt-get update
+          # sudo apt install texlive-full
+          sudo apt install texlive texlive-latex-extra texlive-fonts-recommended dvipng cm-super
           pip install -r extra_requirements/requirements-tests.txt
           python setup.py develop
       - name: Test package
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISABLE_LATEX: 1
         run: |
-          pytest --cov thesis_plots -v --nbmake notebooks/*.ipynb --durations 0 --nb-coverage
-          coverage run --append --source=thesis_plots -m pytest -v --log-level=DEBUG --durations 0
+          pytest --cov thesis_plots -v -n auto --nbmake notebooks/*.ipynb --durations 0 --nb-coverage
+          coverage run --append --source=thesis_plots -m pytest -n auto -v --log-level=DEBUG --durations 0
           coveralls --service=github
-      # Done
+      - name: Test notebooks with latex
+        env:
+          DISABLE_LATEX: 0
+        run: pytest --cov thesis_plots -v -n auto --nbmake notebooks/*.ipynb --durations 0 --nb-coverage
       - name: goodbye
         run: echo "tests done, bye bye"
