@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: False
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: [ "3.7", "3.8", "3.9", "3.10" ]
         test: [ 'coveralls' ]
     env:
       NUMBA_DISABLE_JIT: 1
@@ -40,6 +40,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISABLE_LATEX: 1
+          PLOT_FAST: 1
         run: |
           pytest --cov thesis_plots -v -n auto --nbmake notebooks/*.ipynb --durations 0 --nb-coverage
           coverage run --append --source=thesis_plots -m pytest -n auto -v --log-level=DEBUG --durations 0
@@ -47,6 +48,7 @@ jobs:
       - name: Test notebooks with latex
         env:
           DISABLE_LATEX: 0
+          PLOT_FAST: 1
         run: pytest --cov thesis_plots -v -n auto --nbmake notebooks/*.ipynb --durations 0 --nb-coverage
       - name: goodbye
         run: echo "tests done, bye bye"

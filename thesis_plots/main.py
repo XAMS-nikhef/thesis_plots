@@ -12,6 +12,8 @@ import numpy as np
 import pandas as pd
 from git import Repo, InvalidGitRepositoryError
 
+root_folder = os.path.join(os.path.split(os.path.realpath(__file__))[0], '..')
+
 
 def setup_plt(use_tex=True):
     """Change the plots to have my style and fashion"""
@@ -42,6 +44,7 @@ def setup_plt(use_tex=True):
               'figure.facecolor': 'w',
               'figure.figsize': (10, 8),
               'image.cmap': 'viridis',
+              'lines.linewidth': 2,
               }
     plt.rcParams.update(params)
     if use_tex and not os.environ.get('DISABLE_LATEX', False):
@@ -53,11 +56,10 @@ def save_fig(name,
              file_types=('png', 'pdf'),
              **kwargs):
     """Save a figure in the figures dir"""
-    base = os.path.split(os.path.realpath(__file__))[0]
     kwargs.setdefault('dpi', 150)
     kwargs.setdefault('bbox_inches', "tight")
     for file_type in file_types:
-        path = os.path.join(base, '..', 'figures', f'{name}.{file_type}')
+        path = os.path.join(root_folder, 'figures', f'{name}.{file_type}')
         plt.savefig(path, **kwargs)
 
 
