@@ -43,7 +43,7 @@ jobs:
           PLOT_FAST: 1
         run: |
           pytest --cov thesis_plots -v -n auto --nbmake notebooks/*.ipynb --durations 0 --nb-coverage
-          coverage run --append --source=thesis_plots -m pytest -n auto -v --log-level=DEBUG --durations 0
+          coverage run --append --source=thesis_plots -m pytest -v
           coveralls --service=github
       - name: Test notebooks with latex
         env:

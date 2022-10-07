@@ -89,8 +89,7 @@ def print_versions(
         versions['git'] = [None]
     for m in to_str_tuple(modules):
         result = _version_info_for_module(m, include_git=include_git)
-        if result is None:
-            continue
+        if result is None: continue
         version, path, git_info = result
         versions['module'].append(m)
         versions['version'].append(version)
@@ -138,15 +137,11 @@ def to_str_tuple(x: ty.Union[str, bytes, list, tuple, pd.Series, np.ndarray]) ->
     https://github.com/AxFoundation/strax/blob/d3608efc77acd52e1d5a208c3092b6b45b27a6e2/strax/utils.py#242
     """
     if isinstance(x, (str, bytes)):
-        return (x,)
-    elif isinstance(x, list):
+        return x,
+    if isinstance(x, list):
         return tuple(x)
-    elif isinstance(x, tuple):
+    if isinstance(x, tuple):
         return x
-    elif isinstance(x, pd.Series):
-        return tuple(x.values.tolist())
-    elif isinstance(x, np.ndarray):
-        return tuple(x.tolist())
     raise TypeError(f"Expected string or tuple of strings, got {type(x)}")
 
 
