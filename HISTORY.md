@@ -1,3 +1,21 @@
+0.2.0 / 2022-10-07
+------------------
+
+## What's Changed
+* Detection methods plot by @JoranAngevaare in https://github.com/JoranAngevaare/thesis_plots/pull/26
+* Detection principles by @JoranAngevaare in https://github.com/JoranAngevaare/thesis_plots/pull/27
+* Bump pytest-cov from 3.0.0 to 4.0.0 in /extra_requirements by @dependabot in https://github.com/JoranAngevaare/thesis_plots/pull/28
+* Bump coverage from 6.4.4 to 6.5.0 in /extra_requirements by @dependabot in https://github.com/JoranAngevaare/thesis_plots/pull/29
+* Recoil rates by @JoranAngevaare in https://github.com/JoranAngevaare/thesis_plots/pull/30
+* Bump nbconvert from 7.0.0 to 7.1.0 in /extra_requirements by @dependabot in https://github.com/JoranAngevaare/thesis_plots/pull/34
+* Bump pytest-cov from 3.0.0 to 4.0.0 in /extra_requirements by @dependabot in https://github.com/JoranAngevaare/thesis_plots/pull/36
+* Limit setting by @JoranAngevaare in https://github.com/JoranAngevaare/thesis_plots/pull/39
+
+
+**Full Changelog**: https://github.com/JoranAngevaare/thesis_plots/compare/v0.1.3...v0.2.0
+
+
+
 0.1.3 / 2022-09-27
 ------------------
 
