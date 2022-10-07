@@ -1,4 +1,4 @@
-0.2.0 / 2022-10-07
+1.0.0 / 2022-10-07
 ------------------
 
 ## What's Changed
@@ -12,7 +12,7 @@
 * Limit setting by @JoranAngevaare in https://github.com/JoranAngevaare/thesis_plots/pull/39
 
 
-**Full Changelog**: https://github.com/JoranAngevaare/thesis_plots/compare/v0.1.3...v0.2.0
+**Full Changelog**: https://github.com/JoranAngevaare/thesis_plots/compare/v0.1.3...v1.0.0
 
 
 
