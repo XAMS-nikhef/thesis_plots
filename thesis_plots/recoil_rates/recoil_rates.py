@@ -142,7 +142,7 @@ class RecoilRatesPlot:
             plt.xscale('log')
             plt.yscale('log')
             plt.ylim(y_min, y_max)
-        axes[target_keys[-1]].set_xlabel('$\mathrm{E_{nr}}$ $\mathrm{[keV]}$')
+        axes[target_keys[-1]].set_xlabel('$E_{nr}$ $\mathrm{[keV]}$')
 
     def plot_velocities(self,
                         targets=None,
@@ -200,7 +200,7 @@ class RecoilRatesPlot:
             alpha=0.5,
         )
         axes['A'].set_ylim(bottom=0, top=None)
-        plt.xlabel("$\mathrm{Speed}$ $\mathrm{[km/s]}$")
+        plt.xlabel("$v$ $\mathrm{[km/s]}$")
         plt.ylabel("$\mathrm{Density}$ $\mathrm{[km/s]^{-1}}$")
         axes['A'].legend(loc='upper right', ncol=1)
         for ax, label in zip(target_keys, targets):
@@ -226,7 +226,7 @@ class RecoilRatesPlot:
         for k in target_keys[:-1]:
             axes[k].set_xticks([])
         for k in target_keys:
-            axes[k].set_ylabel('$\mathrm{E}_\mathrm{nr}$ $\mathrm{[keV]}$')
+            axes[k].set_ylabel('$E_{nr}$ $\mathrm{[keV]}$')
             axes[k].set_ylim(es[0], es[-1])
         axes[target_keys[-1]].set_xlim(0, 800)
         axes[target_keys[-1]].set_xlabel('${v}_\mathrm{min}$ $\mathrm{[km/s]}$')
