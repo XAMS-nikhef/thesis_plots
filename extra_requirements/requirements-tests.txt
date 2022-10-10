@@ -7,7 +7,7 @@ gitpython==3.1.27
 latex==0.7.0
 ipywidgets==8.0.2
 matplotlib==3.5.3; python_version<='3.7'
-matplotlib==3.6.0; python_version>'3.7'
+matplotlib==3.6.1; python_version>'3.7'
 mw_plot==0.9.0
 nbconvert==7.1.0
 nbmake==1.2.1
