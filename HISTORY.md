@@ -1,3 +1,19 @@
+1.0.1 / 2022-10-10
+------------------
+
+## What's Changed
+
+* fix coverage by @JoranAngevaare in https://github.com/JoranAngevaare/thesis_plots/pull/40
+* Update plots by @JoranAngevaare in https://github.com/JoranAngevaare/thesis_plots/pull/45
+* Bump scipy from 1.9.1 to 1.9.2 in /extra_requirements by @dependabot in https://github.com/JoranAngevaare/thesis_plots/pull/44
+* Bump matplotlib from 3.6.0 to 3.6.1 in /extra_requirements by @dependabot in https://github.com/JoranAngevaare/thesis_plots/pull/43
+* Bump gitpython from 3.1.27 to 3.1.28 in /extra_requirements by @dependabot in https://github.com/JoranAngevaare/thesis_plots/pull/42
+* Bump nbconvert from 7.1.0 to 7.2.1 in /extra_requirements by @dependabot in https://github.com/JoranAngevaare/thesis_plots/pull/41
+
+
+**Full Changelog**: https://github.com/JoranAngevaare/thesis_plots/compare/v1.0.0...v1.0.1
+
+
 1.0.0 / 2022-10-07
 ------------------
 
