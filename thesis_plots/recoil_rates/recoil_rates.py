@@ -6,7 +6,10 @@ import numericalunits as nu
 import numpy as np
 
 import wimprates
-from wimprates import StandardHaloModel
+from wimprates import StandardHaloModel, v_earth
+
+import thesis_plots
+
 
 _kms = nu.km / nu.s
 
@@ -43,6 +46,9 @@ def labeled_vline(y, t, ytext, **kwargs):
 def vel_dist(vs, v_0, v_esc):
     return StandardHaloModel(v_0=v_0 * _kms, v_esc=v_esc * _kms).velocity_dist(vs, None) * _kms
 
+def mathrm(text):
+    # Just to prevent circular imports, otherwise we would have done "from thesis_plots import mathrm"
+    return thesis_plots.mathrm(text)
 
 class RecoilRatesPlot:
     sigma_nucleon = 1e-47
@@ -58,20 +64,20 @@ class RecoilRatesPlot:
         hspace=0.,  # the amount of height reserved for white space between subplots
     )
 
-    figure_settings = dict(facecolor='white', )
-    text_kwargs = dict(x=1 - 0.025,
-                       y=0.9,
-                       bbox=dict(boxstyle="round",
-                                 alpha=0.5,
-                                 facecolor='gainsboro', ))
+    _figure_settings = dict(facecolor='white', )
+    _text_kwargs = dict(x=1 - 0.025,
+                        y=0.9,
+                        bbox=dict(boxstyle="round",
+                                  alpha=0.2,
+                                  facecolor='gainsboro', ))
 
     @staticmethod
-    def join_x_axes(ax_dict, merge):
+    def _join_x_axes(ax_dict, merge):
         """Merge axes that are in merge to share the same x-axis"""
         ax_dict[merge[0]].get_shared_x_axes().join(*[ax_dict[k] for k in merge])
 
     @staticmethod
-    def estimate_bounds(mw_array):
+    def _estimate_bounds(mw_array):
         bounds = (
                 [np.log10(mw_array[0] / (np.log10(mw_array[1]) / np.log10(mw_array[0])))] +
                 list((np.log10(mw_array[:-1]) + np.log10(mw_array[1:])) / 2) +
@@ -82,9 +88,9 @@ class RecoilRatesPlot:
     def plot_recoil_rates(self, targets=None):
         if targets is None:
             targets = self.targets
-        fig = plt.figure(**self.figure_settings)
+        fig = plt.figure(**self._figure_settings)
         plt.subplots_adjust(**self._subplot_opts)
-        shm = StandardHaloModel(v_0=220 * _kms)
+        shm = StandardHaloModel(v_0=238 * _kms, v_esc=524 * _kms)
         layout = """"""
         legend_key = 'l'
         assert len(targets) >= 1, f"should have at least one target, got {targets}"
@@ -99,7 +105,7 @@ class RecoilRatesPlot:
                                                'width_ratios': [1, 0.03]})
         n_target = len(targets)
         target_keys = string.ascii_uppercase[:n_target]
-        self.join_x_axes(axes, target_keys)
+        self._join_x_axes(axes, target_keys)
         y_max = 0
         y_min = np.inf
         es = np.logspace(-1, np.log10(200), 1000)
@@ -114,11 +120,11 @@ class RecoilRatesPlot:
                                          material=label,
                                          halo_model=shm,
                                          ) * (nu.keV * (1000 * nu.kg) * nu.year)
-                plt.plot(es, xs, c=getattr(plt.cm, self.color_map)(norm(mw)), )
+                plt.plot(es, xs, c=getattr(plt.cm, self.color_map)(norm(mw)), marker='')
                 y_max = max(y_max, np.max(xs))
                 y_min = min(y_min, np.max(xs))
-            axes[ax].text(s=f'$\mathrm{{{label}}}$',
-                          **self.text_kwargs,
+            axes[ax].text(s=mathrm(label),
+                          **self._text_kwargs,
                           transform=axes[ax].transAxes,
                           ha='right',
                           va='top',
@@ -127,31 +133,38 @@ class RecoilRatesPlot:
         mpl.colorbar.ColorbarBase(ax=axes[legend_key], norm=norm,
                                   orientation='vertical',
                                   cmap=self.color_map,
-                                  boundaries=self.estimate_bounds(self.mws),
+                                  boundaries=self._estimate_bounds(self.mws),
                                   ticks=self.mws,
                                   label='$\mathrm{M}_{\chi}$')
 
         for k in target_keys[:-1]:
             axes[k].set_xticks([])
-        y_max = np.ceil(y_max / (10 ** np.floor(np.log10(y_max)))) * 10 ** (np.floor(np.log10(y_max)))
-        y_min = 10 ** np.floor(np.log10(y_min))
+        y_max = 2 * np.ceil(y_max / (10 ** np.floor(np.log10(y_max)))) * 10 ** (np.floor(np.log10(y_max)))
+        y_min = 2 * 10 ** np.floor(np.log10(y_min))
         for k in target_keys:
-            axes[k].set_ylabel('$\mathrm{Rate}$\\\\$\mathrm{[c/(keV\,t\,yr)]}$')
-
+            # axes[k].set_ylabel('$\mathrm{Rate}$\\\\$\mathrm{[cts/(keV\,t\,yr)]}$')
             plt.sca(axes[k])
             plt.xscale('log')
             plt.yscale('log')
             plt.ylim(y_min, y_max)
-        axes[target_keys[-1]].set_xlabel('$E_{nr}$ $\mathrm{[keV]}$')
+        # Get one ylabel on the position halfway at the figure
+        fig.text(-0.05,
+                 0.5,
+                 '$\mathrm{Rate}\ \mathrm{[counts/(keV\,t\,yr)]}$',
+                 va='center',
+                 rotation='vertical',
+                 fontsize=plt.rcParams.get('axes.labelsize'),
+                 )
+        axes[target_keys[-1]].set_xlabel(mathrm('E_{nr} [keV_{nr}]'))
 
     def plot_velocities(self,
                         targets=None,
-                        vs=np.linspace(0, 800 * _kms, 1_000)
+                        vs=np.linspace(0, 850 * _kms, 1_000)
                         ):
         if targets is None:
             targets = self.targets
 
-        fig = plt.figure(**{**self.figure_settings, **{'figsize': (10, 10)}})
+        fig = plt.figure(**{**self._figure_settings, **{'figsize': (10, 10)}})
         plt.subplots_adjust(**self._subplot_opts)
         plt.subplots_adjust(hspace=0.15)
         legend_key = 'l'
@@ -167,20 +180,16 @@ class RecoilRatesPlot:
                                       'width_ratios': [1, 0.03]})
         n_target = len(targets)
         target_keys = string.ascii_uppercase[1:n_target + 1]
-        self.join_x_axes(axes, string.ascii_uppercase[:n_target + 1])
+        self._join_x_axes(axes, string.ascii_uppercase[:n_target + 1])
         es = np.linspace(0, 5, 100)
 
         new = vel_dist(vs, v_0=238, v_esc=544)
         plt.sca(axes['A'])
         axes['A'].xaxis.set_ticks_position('both')
 
-        plt.plot(vs / _kms,
-                 vel_dist(vs, v_0=220, v_esc=544),
-                 label='$\mathrm{Old}$', color='b')
-        labeled_vline(544, '$v_\mathrm{esc}$', 0.0001, color='b', ls='--', textoffset=5)
-        plt.plot(vs / _kms,
-                 new,
-                 label='$\mathrm{New}$', color='g')
+        plt.plot(vs / _kms, vel_dist(vs, v_0=220, v_esc=544), label=mathrm('Old'), color='b', marker='')
+        labeled_vline(544+v_earth()/_kms, '$v_\mathrm{esc}+v_\mathrm{Earth}$', 0.0005, color='b', ls='--', textoffset=0)
+        plt.plot(vs / _kms, new, label=mathrm('New'), color='g', marker='')
 
         plt.fill_between(
             vs / _kms,
@@ -189,9 +198,9 @@ class RecoilRatesPlot:
             color='g',
             alpha=0.5,
         )
-        labeled_vline(528, '$v_\mathrm{esc}$', 0.0001, color='g', ls='--', text_kwargs=dict(ha='left'),
-                      textoffset=-25)
-        plt.axvspan(528 - 25, 528 + 24, alpha=0.1)
+        labeled_vline(528+v_earth()/_kms, '$v_\mathrm{esc}+v_\mathrm{Earth}$', 0.0005, color='g', ls='--', text_kwargs=dict(ha='left'),
+                      textoffset=-30)
+        plt.axvspan(528 - 25+v_earth()/_kms, 528 + 24+v_earth()/_kms, alpha=0.2, color='g')
         plt.fill_between(
             vs / _kms,
             vel_dist(vs, v_0=238, v_esc=528 - 25),
@@ -201,17 +210,17 @@ class RecoilRatesPlot:
         )
         axes['A'].set_ylim(bottom=0, top=None)
         plt.xlabel("$v$ $\mathrm{[km/s]}$")
-        plt.ylabel("$\mathrm{Density}$ $\mathrm{[km/s]^{-1}}$")
-        axes['A'].legend(loc='upper right', ncol=1)
+        plt.ylabel("$f(v)$ $\mathrm{[km/s]^{-1}}$")
+        axes['A'].legend(loc='upper left', ncol=1)
         for ax, label in zip(target_keys, targets):
             plt.sca(axes[ax])
             norm = mpl.colors.LogNorm(vmin=self.mws[0], vmax=self.mws[-1])
             for mw in self.mws:
                 xs = wimprates.vmin_elastic(es * 1000 * nu.eV, mw * nu.GeV / nu.c0 ** 2, label) / _kms
-                plt.plot(xs, es, c=getattr(plt.cm, self.color_map)(norm(mw)), )
+                plt.plot(xs, es, c=getattr(plt.cm, self.color_map)(norm(mw)), marker='', )
 
-            axes[ax].text(s=f'$\mathrm{{{label}}}$',
-                          **{**self.text_kwargs, **{'x': 0.95}},
+            axes[ax].text(s=mathrm(label),
+                          **{**self._text_kwargs, **{'x': 0.94}},
                           transform=axes[ax].transAxes,
                           ha='left',
                           va='top',
@@ -220,13 +229,23 @@ class RecoilRatesPlot:
                                   norm=norm,
                                   orientation='vertical',
                                   cmap=self.color_map,
-                                  boundaries=self.estimate_bounds(self.mws),
+                                  boundaries=self._estimate_bounds(self.mws),
                                   ticks=self.mws,
                                   label='$\mathrm{M}_\chi$')
         for k in target_keys[:-1]:
             axes[k].set_xticks([])
         for k in target_keys:
-            axes[k].set_ylabel('$E_{nr}$ $\mathrm{[keV]}$')
+            # axes[k].set_ylabel(mathrm('E_{nr} [keV]'))
             axes[k].set_ylim(es[0], es[-1])
-        axes[target_keys[-1]].set_xlim(0, 800)
+        axes[target_keys[-1]].set_xlim(0, vs[-1]/_kms)
+        # Get one ylabel on the position next to the # targets panels. This depends
+        # on the fig-size where the panel ratios are defined in the fig.subplot_mosaic
+        l_y = 0.5 * n_target / (2.2 + 1 * n_target)
+        fig.text(-0.05,
+                 l_y,
+                 mathrm('E_{nr} [keV]'),
+                 va='center',
+                 rotation='vertical',
+                 fontsize=plt.rcParams.get('axes.labelsize'),
+                 )
         axes[target_keys[-1]].set_xlabel('${v}_\mathrm{min}$ $\mathrm{[km/s]}$')

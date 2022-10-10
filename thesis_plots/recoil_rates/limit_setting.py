@@ -5,10 +5,10 @@ import numericalunits as nu
 import numpy as np
 import pandas as pd
 import scipy
+from thesis_plots import root_folder
 from tqdm.notebook import tqdm
 
 import wimprates
-from thesis_plots import root_folder
 
 
 class LZ:
@@ -57,14 +57,12 @@ class LimitSetter:
     def set_limits(self,
                    mass_range=np.linspace(1, 1000, 10),
                    log_sigma_range=(-49, -42),
-                   n_energy_bins=1e2,
                    n_sigma_bins=10,
                    ):
         """
         Get limits for the given masses, expressed as
         :param mass_range: list of masses [GeV] to compute a limit for
         :param log_sigma_range: boundaries where to interpolate between to solve for the log-cross-section to get a limit at
-        :param n_energy_bins: number of energy bins to use in the numerical integration
         :param n_sigma_bins: number of bins for the interpolation to get the limit at
         :return: list of length <mass_range> to get the 90% confidence level limit at.
         """
@@ -109,6 +107,6 @@ class LimitSetter:
             ) * (nu.keV * (1000 * nu.kg) * nu.year)
             return rate * eff
 
-        total_rate, _ = scipy.integrate.quad(d_rate, 0.1, 100, epsrel=1e-3)
+        total_rate, _ = scipy.integrate.quad(d_rate, *self.detector.e_roi, epsrel=1e-2)
         total_rate *= self.detector.exposure * self.detector.efficiency
         return total_rate

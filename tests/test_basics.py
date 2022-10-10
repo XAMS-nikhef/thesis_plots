@@ -28,12 +28,11 @@ class TestToStrTuple(TestCase):
             thesis_plots.to_str_tuple(np.array(['a']))
 
 
-
 def test_limit_setter():
     thesis_plots.LimitSetter()
 
 
 def test_axhline():
-    thesis_plots.labeled_hline(1,2,'3')
-    thesis_plots.labeled_vline(1,2,'3')
+    thesis_plots.labeled_hline(1, 2, '3')
+    thesis_plots.labeled_vline(1, 2, '3')
     plt.clf()

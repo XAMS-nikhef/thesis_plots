@@ -8,7 +8,6 @@ import os
 
 import matplotlib.pyplot as plt
 import numpy as np
-
 from thesis_plots import string_to_mathrm as mathrm
 
 
@@ -76,11 +75,11 @@ def combined_milkiway_plot(r_max=27.5, h_frac=0.33):
                  capsize=3,
                  )
     # TODO, why /solar_position??
-    plt.plot(rvals * u.kpc, vcirc(Cautun20, rvals / solar_position, 0), label=mathrm('Total'))
-    plt.plot(rvals * u.kpc, vcirc(Cautun_halo, rvals / solar_position, 0), label=mathrm('DM Halo'))
-    plt.plot(rvals * u.kpc, vcirc(Cautun_Discs, rvals / solar_position, 0), label=mathrm('Discs'))
-    plt.plot(rvals * u.kpc, vcirc(Cautun_Bulge, rvals / solar_position, 0), label=mathrm('Bulge'))
-    plt.plot(rvals * u.kpc, vcirc(Cautun_cgm, rvals / solar_position, 0), label=mathrm('CGM'))
+    plt.plot(rvals * u.kpc, vcirc(Cautun20, rvals / solar_position, 0), label=mathrm('Total'), marker='')
+    plt.plot(rvals * u.kpc, vcirc(Cautun_halo, rvals / solar_position, 0), label=mathrm('DM Halo'), marker='')
+    plt.plot(rvals * u.kpc, vcirc(Cautun_Discs, rvals / solar_position, 0), label=mathrm('Discs'), marker='')
+    plt.plot(rvals * u.kpc, vcirc(Cautun_Bulge, rvals / solar_position, 0), label=mathrm('Bulge'), marker='')
+    plt.plot(rvals * u.kpc, vcirc(Cautun_cgm, rvals / solar_position, 0), label=mathrm('CGM'), marker='')
     plt.axvline(solar_position, ls='--', c='r', label=mathrm('Sun'))
     ax1.set_ylabel('$V_c$ $[\mathrm{km/s}]$', fontsize=mw1.fontsize)
     plt.axvline(0, ls='-', c='k')
