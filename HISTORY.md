@@ -1,3 +1,14 @@
+1.0.2 / 2022-10-11
+------------------
+
+## What's Changed
+
+* Expand the limit setting to include a didactic example by @JoranAngevaare in https://github.com/JoranAngevaare/thesis_plots/pull/46
+
+
+**Full Changelog**: https://github.com/JoranAngevaare/thesis_plots/compare/v1.0.1...v1.0.2
+
+
 1.0.1 / 2022-10-10
 ------------------
 
