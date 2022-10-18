@@ -6,5 +6,6 @@
 exclude_lines =
     use_tex
     unknown
+    except TypeError
 
 ignore_errors = True
