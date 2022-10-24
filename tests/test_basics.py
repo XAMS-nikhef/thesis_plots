@@ -4,6 +4,7 @@ import thesis_plots
 import numpy as np
 from unittest import TestCase
 
+
 def test_print_versions():
     thesis_plots.print_versions()
     thesis_plots.print_versions(['something_not_installed'])

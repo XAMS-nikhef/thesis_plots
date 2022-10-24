@@ -13,7 +13,6 @@ import pandas as pd
 from git import Repo, InvalidGitRepositoryError
 from cycler import cycler
 
-
 root_folder = os.path.join(os.path.split(os.path.realpath(__file__))[0], '..')
 
 
@@ -52,7 +51,8 @@ def setup_plt(use_tex=True):
     # from https://github.com/XENONnT/nton/blob/d5d71b2798d74b9632a8846eb2e0f19ab0d1f563/nton/mplconfigs/stylelib/xenonnt.mplstyle
     custom_cycler = (
             cycler(
-                color=[f'#{c}' for c in ['000000', '0052FF', 'FF2A2A', '4AC124', 'F7BF24', '00CFFF', 'FF6AFF', 'A54040']]
+                color=[f'#{c}' for c in
+                       ['000000', '0052FF', 'FF2A2A', '4AC124', 'F7BF24', '00CFFF', 'FF6AFF', 'A54040']]
             ) +
             cycler(marker=['o', 's', 'v', '^', 'D', 'P', '>', 'x']))
 
