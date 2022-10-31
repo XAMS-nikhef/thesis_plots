@@ -17,7 +17,7 @@ pytest==7.1.3
 pytest-cov==4.0.0
 pytest-forked==1.4.0
 pytest-runner==6.0.0
-pytest-xdist==2.5.0
+pytest-xdist==3.0.2
 pytest_notebook==0.8.0
 wimprates==0.4.1
 scipy==1.6.0; python_version<='3.7'
