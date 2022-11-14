@@ -1,6 +1,8 @@
 import os
 from functools import lru_cache
 
+from threading import Thread
+import time
 import numericalunits as nu
 import numpy as np
 import pandas as pd
@@ -54,34 +56,59 @@ class LimitSetter:
         self.detector = detector
         self.halo_model = halo_model
 
+    def _get_limit(self, results, sigmas, result_i, mw):
+        # For each log-cross-section, calculate the total number of observed events
+        n_observed = []
+        for s in sigmas:
+            n_i = self.integrate_rate(mw, s)
+            n_observed.append(n_i)
+            if n_i > self.no_background_possion:
+                break
+
+        itp = scipy.interpolate.interp1d(n_observed, 10**sigmas[:len(n_observed)], bounds_error=False)
+        results[result_i]=itp(self.no_background_possion)
+
     def set_limits(self,
                    mass_range=np.linspace(1, 1000, 10),
                    log_sigma_range=(-49, -42),
                    n_sigma_bins=10,
+                   n_threads=1,
+                   _t_sleep=1,
                    ):
         """
         Get limits for the given masses, expressed as
         :param mass_range: list of masses [GeV] to compute a limit for
         :param log_sigma_range: boundaries where to interpolate between to solve for the log-cross-section to get a limit at
         :param n_sigma_bins: number of bins for the interpolation to get the limit at
+        :param n_threads: number of threads to use (default means no multithreading)
+        :param _t_sleep: wait _t_sleep if multithreading.
         :return: list of length <mass_range> to get the 90% confidence level limit at.
         """
         sigmas = np.linspace(*log_sigma_range, int(n_sigma_bins))
 
-        results = []
-        for mw in tqdm(mass_range, disable=not self.tqdm_active, desc='Getting limit for masses'):
-            # For each log-cross-section, calculate the total number of observed events
-            n_observed = []
-            for s in sigmas:
-                n_i = self.integrate_rate(mw, s)
-                n_observed.append(n_i)
-                if n_i > self.no_background_possion:
-                    break
+        results = [0] * len(mass_range)
+        threads = []
+        for result_i , mw in enumerate(
+                tqdm(mass_range, disable=not self.tqdm_active, desc='Getting limit for masses')
+        ):
+            while len(threads) > n_threads:
+                threads = [t for t in threads if t.is_alive()]
+                time.sleep(1)
+            t = Thread(target=self._get_limit,
+                       args =(results, sigmas, result_i, mw) )
+            t.start()
+            threads.append(t)
 
-            itp = scipy.interpolate.interp1d(n_observed, sigmas[:len(n_observed)], bounds_error=False)
-            results.append(itp(self.no_background_possion))
-        # Convert back to non-log10 numbers:
-        return 10 ** np.array(results)
+        n_alive = n_threads
+        t_wait = 0
+        while n_alive:
+            n_alive = sum(t.is_alive() for t in threads)
+            print(f'{n_alive} threads running, sleep. ({t_wait:.1f} s)', flush=True, end='\r')
+            t_wait += _t_sleep
+            time.sleep(_t_sleep)
+
+        # Convert back to array
+        return np.array(results)
 
     def integrate_rate(self, mw, log_cross_section):
         """
