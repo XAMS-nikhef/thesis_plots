@@ -68,12 +68,15 @@ def setup_plt(use_tex=True):
 
 def save_fig(name,
              file_types=('png', 'pdf'),
+             save_in=root_folder,
              **kwargs):
     """Save a figure in the figures dir"""
     kwargs.setdefault('dpi', 150)
     kwargs.setdefault('bbox_inches', "tight")
     for file_type in file_types:
-        path = os.path.join(root_folder, 'figures', f'{name}.{file_type}')
+        path = os.path.join(save_in, 'figures', f'{name}.{file_type}')
+        if not os.path.exists(p:=os.path.join(save_in, 'figures')):
+            os.makedirs(p, exist_ok=True)
         plt.savefig(path, **kwargs)
 
 
@@ -196,3 +199,14 @@ def deterministic_hash(thing, length=6):
     jsonned = json.dumps(hashable, cls=json.JSONEncoder)
     digest = sha1(jsonned.encode('ascii')).digest()  # nosec
     return b32encode(digest)[:length].decode('ascii').lower()
+
+def legend_kw(**kw):
+    options = dict(
+        bbox_to_anchor=(0., 1.02, 1, .32),
+        loc=3,
+        ncol=3,
+        mode="expand",
+        borderaxespad=0.,
+        frameon=True)
+    options.update(kw)
+    return options
