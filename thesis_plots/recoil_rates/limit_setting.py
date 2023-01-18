@@ -65,8 +65,8 @@ class LimitSetter:
             if n_i > self.no_background_possion:
                 break
 
-        itp = scipy.interpolate.interp1d(n_observed, 10**sigmas[:len(n_observed)], bounds_error=False)
-        results[result_i]=itp(self.no_background_possion)
+        itp = scipy.interpolate.interp1d(n_observed, 10 ** sigmas[:len(n_observed)], bounds_error=False)
+        results[result_i] = itp(self.no_background_possion)
 
     def set_limits(self,
                    mass_range=np.linspace(1, 1000, 10),
@@ -88,14 +88,14 @@ class LimitSetter:
 
         results = [0] * len(mass_range)
         threads = []
-        for result_i , mw in enumerate(
+        for result_i, mw in enumerate(
                 tqdm(mass_range, disable=not self.tqdm_active, desc='Getting limit for masses')
         ):
             while len(threads) > n_threads:
                 threads = [t for t in threads if t.is_alive()]
                 time.sleep(1)
             t = Thread(target=self._get_limit,
-                       args =(results, sigmas, result_i, mw) )
+                       args=(results, sigmas, result_i, mw))
             t.start()
             threads.append(t)
 

@@ -68,7 +68,7 @@ class RecoilRatesPlot:
         hspace=0.,  # the amount of height reserved for white space between subplots
     )
 
-    _figure_settings = dict(facecolor='white', )
+    _figure_settings = dict(facecolor='white', figsize=(9, 8))
     _text_kwargs = dict(x=1 - 0.025,
                         y=0.9,
                         bbox=dict(boxstyle="round",
@@ -170,9 +170,9 @@ class RecoilRatesPlot:
         if targets is None:
             targets = self.targets
 
-        fig = plt.figure(**{**self._figure_settings, **{'figsize': (10, 10)}})
+        fig = plt.figure(**{**self._figure_settings, **{'figsize': (9, 9)}})
         plt.subplots_adjust(**self._subplot_opts)
-        plt.subplots_adjust(hspace=0.15)
+        plt.subplots_adjust(hspace=0.18)
         legend_key = 'l'
         layout = """
                  A.
@@ -237,7 +237,7 @@ class RecoilRatesPlot:
                               **self.arrow_kwargs)
 
             axes[ax].text(s=mathrm(label),
-                          **{**self._text_kwargs, **{'x': 0.94}},
+                          **{**self._text_kwargs, **{'x': 0.93}},
                           transform=axes[ax].transAxes,
                           ha='left',
                           va='top',

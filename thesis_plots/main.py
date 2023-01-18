@@ -75,7 +75,7 @@ def save_fig(name,
     kwargs.setdefault('bbox_inches', "tight")
     for file_type in file_types:
         path = os.path.join(save_in, 'figures', f'{name}.{file_type}')
-        if not os.path.exists(p:=os.path.join(save_in, 'figures')):
+        if not os.path.exists(p := os.path.join(save_in, 'figures')):
             os.makedirs(p, exist_ok=True)
         plt.savefig(path, **kwargs)
 
@@ -199,6 +199,7 @@ def deterministic_hash(thing, length=6):
     jsonned = json.dumps(hashable, cls=json.JSONEncoder)
     digest = sha1(jsonned.encode('ascii')).digest()  # nosec
     return b32encode(digest)[:length].decode('ascii').lower()
+
 
 def legend_kw(**kw):
     options = dict(

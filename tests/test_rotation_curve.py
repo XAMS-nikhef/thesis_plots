@@ -15,3 +15,9 @@ def test_rotation_curve():
 def test_combined_curves():
     thesis_plots.combined_milkiway_plot()
     plt.clf()
+
+
+def test_richards():
+    plot = thesis_plots.PlotRotationCurveRichards()
+    total, down, up, bary, disc, halo, bulge, gas = plot.read_data()
+    plot.get_fit(halo, check=True)
