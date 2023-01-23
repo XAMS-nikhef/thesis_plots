@@ -94,4 +94,4 @@ def combined_milkiway_plot(r_max=26, h_frac=0.33):
     plt.sca(ax2)
     ax2.tick_params(axis='both', direction='out')
     for xy_label in [plt.ylabel, plt.xlabel]:
-        xy_label('$\mathrm{Galactrocentric\ coordinates\ [kpc]}$')
+        xy_label('$\mathrm{Galactocentric\ coordinates\ [kpc]}$')
