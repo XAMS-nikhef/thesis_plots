@@ -56,7 +56,7 @@ def setup_plt(use_tex=True):
     custom_cycler = (
             cycler(
                 color=[f'#{c}' for c in
-                       ['000000', '0052FF', 'FF2A2A', '4AC124', 'F7BF24', '00CFFF', 'FF6AFF', 'A54040']]
+                       ['000000', '0052FF', 'FF2A2A', '4AC124', 'ffa500', '00CFFF', 'FF6AFF', 'A54040']]
             ) +
             cycler(marker=['o', 's', 'v', '^', 'D', 'P', '>', 'x']))
 
@@ -64,6 +64,15 @@ def setup_plt(use_tex=True):
     if use_tex and not os.environ.get('DISABLE_LATEX', False):
         # Allow latex to be disabled from the environment coverage see #30
         matplotlib.rc('text', usetex=True)
+
+    from matplotlib.colors import ListedColormap
+    import matplotlib as mpl
+
+    # My professor does not like the "yellowish colors" so I have to somehow circumvent those
+    register_as = 'custom_map'
+    custom = ListedColormap(mpl.colormaps['viridis_r'](np.linspace(0.15, 1, 10)))
+    mpl.colormaps.register(custom, name=register_as)
+    setattr(mpl.pyplot.cm, register_as, custom)
 
 
 def save_fig(name,
