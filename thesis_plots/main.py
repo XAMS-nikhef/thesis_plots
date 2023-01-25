@@ -70,7 +70,12 @@ def setup_plt(use_tex=True):
 
     # My professor does not like the "yellowish colors" so I have to somehow circumvent those
     register_as = 'custom_map'
-    custom = ListedColormap(mpl.colormaps['viridis_r'](np.linspace(0.15, 1, 10)))
+    custom = ListedColormap(mpl.colormaps['viridis'](np.linspace(0, 0.85, 1000)))
+    mpl.colormaps.register(custom, name=register_as)
+    setattr(mpl.pyplot.cm, register_as, custom)
+
+    register_as += '_r'
+    custom = ListedColormap(mpl.colormaps['viridis_r'](np.linspace(0.15, 1, 1000)))
     mpl.colormaps.register(custom, name=register_as)
     setattr(mpl.pyplot.cm, register_as, custom)
 
