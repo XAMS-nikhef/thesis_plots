@@ -22,7 +22,7 @@ requires = open_requirements('requirements.txt')
 tests_requires = open_requirements('extra_requirements/requirements-tests.txt')
 
 setuptools.setup(name='thesis_plots',
-                 version='1.1.0',
+                 version='1.1.1',
                  description='Collection of plots for dissertation',
                  author='J. R. Angevaare',
                  url='https://github.com/JoranAngevaare/thesis_plots',
