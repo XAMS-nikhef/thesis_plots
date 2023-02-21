@@ -3,4 +3,5 @@ ipywidgets
 latex
 matplotlib
 numpy
+pandas
 scipy
