@@ -182,39 +182,6 @@ def string_to_mathrm(string):
     return f'$\mathrm{{{string}}}$'
 
 
-def hashablize(obj):
-    """Convert a container hierarchy into one that can be hashed.
-    See http://stackoverflow.com/questions/985294
-
-    Copied from https://github.com/AxFoundation/strax/blob/master/strax/utils.py
-    """
-    if isinstance(obj, Mapping):
-        # Convert immutabledict etc for json decoding
-        obj = dict(obj)
-    try:
-        hash(obj)
-    except TypeError:
-        if isinstance(obj, dict):
-            return tuple((k, hashablize(v)) for (k, v) in sorted(obj.items()))
-        elif hasattr(obj, '__iter__'):
-            return tuple(hashablize(o) for o in obj)
-        else:
-            raise TypeError("Can't hashablize object of type %r" % type(obj))
-    else:
-        return obj
-
-
-def deterministic_hash(thing, length=6):
-    """Return a base32 lowercase string of length determined from hashing
-    a container hierarchy
-    Copied from https://github.com/AxFoundation/strax/blob/master/strax/utils.py
-    """
-    hashable = hashablize(thing)
-    jsonned = json.dumps(hashable, cls=json.JSONEncoder)
-    digest = sha1(jsonned.encode('ascii')).digest()  # nosec
-    return b32encode(digest)[:length].decode('ascii').lower()
-
-
 def legend_kw(**kw):
     options = dict(
         bbox_to_anchor=(0., 1.02, 1, .32),

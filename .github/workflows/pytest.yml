@@ -12,11 +12,12 @@ on:
 
 jobs:
   update:
-    name: "${{ matrix.test }}_py${{ matrix.python-version }}"
-    runs-on: ubuntu-latest
+    name: "${{matrix.os}} ${{ matrix.test }}_py${{ matrix.python-version }}"
+    runs-on: "${{ matrix.os }}"
     strategy:
       fail-fast: False
       matrix:
+        os:  ["ubuntu-latest" , "macos-latest" ]
         python-version: [ "3.8", "3.9", "3.10" ]
         test: [ 'coveralls' ]
     env:
@@ -31,6 +32,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Install requirements
         run: |
+          
           sudo apt-get update
           # sudo apt install texlive-full
           sudo apt install texlive texlive-latex-extra texlive-fonts-recommended dvipng cm-super

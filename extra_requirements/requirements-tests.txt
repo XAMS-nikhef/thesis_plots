@@ -1,8 +1,5 @@
-astropy==4.3.1; python_version<='3.7'
-astropy==5.2.1; python_version>'3.7'
 coverage==6.5.0
 coveralls==3.3.1
-galpy==1.8.1
 gitpython==3.1.30
 latex==0.7.0
 ipywidgets==8.0.4
@@ -19,7 +16,3 @@ pytest-forked==1.4.0
 pytest-runner==6.0.0
 pytest-xdist==3.0.2
 pytest_notebook==0.8.1
-wimprates==0.4.1
-scipy==1.6.0; python_version<='3.7'
-scipy==1.10.0; python_version>'3.7'
-git+https://github.com/JoranAngevaare/Milky_Way_mass_profile
