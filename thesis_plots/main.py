@@ -12,10 +12,6 @@ import numpy as np
 import pandas as pd
 from git import Repo, InvalidGitRepositoryError
 from cycler import cycler
-import json
-from base64 import b32encode
-from hashlib import sha1
-from collections.abc import Mapping
 
 root_folder = os.path.join(os.path.split(os.path.realpath(__file__))[0], '..')
 

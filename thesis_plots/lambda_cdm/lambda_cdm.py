@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import os
-from thesis_plots import mathrm
 import thesis_plots
+from thesis_plots import mathrm
 
 
 class PlotLambdaCDM:
