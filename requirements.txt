@@ -4,4 +4,3 @@ latex
 matplotlib
 numpy
 pandas
-scipy
