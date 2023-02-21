@@ -21,5 +21,5 @@ pytest-xdist==3.0.2
 pytest_notebook==0.8.1
 wimprates==0.4.1
 scipy==1.6.0; python_version<='3.7'
-scipy==1.10.0; python_version>'3.7'
+scipy==1.10.1; python_version>'3.7'
 git+https://github.com/JoranAngevaare/Milky_Way_mass_profile
