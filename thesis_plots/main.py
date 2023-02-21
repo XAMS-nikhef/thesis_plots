@@ -177,6 +177,10 @@ def string_to_mathrm(string):
     string = string.replace(' ', '\ ')
     return f'$\mathrm{{{string}}}$'
 
+def mathrm(string):
+    """wrap a string in mathrm mode for latex labels"""
+    return string_to_mathrm(string)
+
 
 def legend_kw(**kw):
     options = dict(
