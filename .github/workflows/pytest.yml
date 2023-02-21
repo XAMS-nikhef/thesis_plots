@@ -12,12 +12,13 @@ on:
 
 jobs:
   update:
-    name: "${{ matrix.test }}_py${{ matrix.python-version }}"
-    runs-on: ubuntu-latest
+    name: "${{matrix.os}} ${{ matrix.test }}_py${{ matrix.python-version }}"
+    runs-on: "${{ matrix.os }}"
     strategy:
       fail-fast: False
       matrix:
-        python-version: [ "3.8", "3.9", "3.10" ]
+        os:  ["ubuntu-latest" , "macos-latest" ]
+        python-version: [ "3.8", "3.9", "3.10", "3.11"]
         test: [ 'coveralls' ]
     env:
       NUMBA_DISABLE_JIT: 1
@@ -29,11 +30,17 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Checkout repo
         uses: actions/checkout@v3
-      - name: Install requirements
+      - name: Install latex (mac)
+        if: matrix.os == 'macos-latest'
+        run: brew install --cask basictex
+      - name: install latex (linux)
+        if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           # sudo apt install texlive-full
           sudo apt install texlive texlive-latex-extra texlive-fonts-recommended dvipng cm-super
+      - name: install dependencies
+        run: |
           pip install -r extra_requirements/requirements-tests.txt
           python setup.py develop
       - name: Test package
