@@ -12,7 +12,7 @@ If you want to organize your thesis plots in an easily reproducible manner, this
 
 **Getting started**
 ```
-# Clone the repository to your own github account, and copy it locally (or on a cluster)
+# Fork the repository to your own github account, and copy it locally (or on a cluster)
 
 # clone the repository
 git clone git@github.com:<YOUR_GITHUB_ACCOUNT>/thesis_plots.git
